@@ -18,17 +18,10 @@ export class App extends React.Component {
     per_page: 12,
     totalPages: 0,
     largeImageURL: '',
-    contentLoad: false,
+    contentLoad: true,
     showModal: false,
     message: '',
   };
-
-  componentDidMount() {
-    this.setState({
-      message: 'To display pictures, enter a query in the search field',
-    });
-    this.getData();
-  }
 
   componentDidUpdate(_, prevState) {
     if (
@@ -59,7 +52,7 @@ export class App extends React.Component {
       }));
       this.setState(prevState => ({
         photos: [...prevState.photos, ...photos],
-        totalPages: r.totalHits / this.state.per_page,
+        totalPages: Math.ceil(r.totalHits / this.state.per_page),
         contentLoad: true,
       }));
     });
